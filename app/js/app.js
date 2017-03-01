@@ -1,6 +1,7 @@
-angular.module( 'app', [ 'ui.router','ngMaterial','ngAnimate', 'ngAria', 'home','header', 'footer'
-] ).config( function($urlRouterProvider) {
-  $urlRouterProvider.otherwise( '/home/data-list' );
+angular.module( 'app', [ 'ui.router','ngMaterial','ngAnimate', 'ngAria', 'home','login','header', 'footer'
+] ).config( function($urlRouterProvider,$locationProvider) {
+  $urlRouterProvider.otherwise( '/home/login' );
+  $locationProvider.html5Mode(true)
 } ).run( [ '$rootScope',
   function( $rootScope) {
   }

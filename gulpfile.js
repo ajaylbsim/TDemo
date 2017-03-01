@@ -75,10 +75,16 @@ gulp.task('css-dev', function() {
         .pipe(gulp.dest(options.CSS_DEST));
 });
 
-gulp.task('clean', function() {
+/*gulp.task('clean', function() {
     return gulp.src([options.DIST_SRC + '/*']
             .concat(options.PARTIALS_DEST + '/*'), {read: false})
         .pipe(clean( {force: true} ));
+});*/
+
+gulp.task('clean', function() {
+    return gulp.src([options.DIST_SRC + '/css', options.DIST_SRC + '/fonts', options.DIST_SRC + '/img', options.DIST_SRC + '/js']
+            .concat(options.PARTIALS_DEST + '/*'), { read: false })
+        .pipe(clean({ force: true }));
 });
 
 gulp.task('deploy', [ 'js', 'css']);

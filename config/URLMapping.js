@@ -7,20 +7,36 @@ var controllers = {
 
 
 
+var jwt = require('express-jwt');
+ 
+var secretCallback = function(req, payload, done){
+ done(null, "Tsecret");
+/*  UserService.findOne(issuer, function(err, tenant){
+    if (err) { return done(err); }
+    if (!tenant) { return done(new Error('missing_secret')); }
+ 
+   // var secret = utilities.decrypt(tenant.secret);
+    done(null, "ajay");
+  });*/
+};
+
+
 __app.get('/*', function(req, res) {
         res.sendfile(__appBaseDir+'/static/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 
 
 
-__app.post(BaseURL+'login', validateRequest,function(req, res) {
-	if((req.body.email == "demo@gmail.com")&&(req.body.password == "123")){
 
-		res.send({status:200,message:"user succesfully loggedIn"});
-	}else{
-		res.send({status:401,message:"user credential is missing"});
-	}
-});
+__app.post(BaseURL+'login/', validateRequest,controllers.user.login);
+__app.post(BaseURL+'user/', validateRequest,controllers.user.saveUser);
+
+__app.get(BaseURL+'user/all',jwt({secret: secretCallback}),validateRequest,controllers.user.findAll);
+
+
+
+
+
 
 
 function validateRequest(req,res,next){
@@ -30,3 +46,5 @@ function validateRequest(req,res,next){
 		res.send({status:401,message:"Not a valid Request!"});
 	}
 }
+
+
